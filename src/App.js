@@ -1,10 +1,12 @@
 import React from 'react'
 import {
+    Pressable,
     Image,
     View,
     Text,
     StyleSheet,
     SafeAreaView,
+    Linking,
     StatusBar,
 } from 'react-native'
 
@@ -12,7 +14,14 @@ const colorGithub = '#010409'
 const colorFont = '#c9d1d9'
 const colorDark = '#4f565e'
 const imageProfile = 'https://avatars.githubusercontent.com/u/65117375?v=4'
+const linkProfile = 'https://github.com/Glen1986'
 const App = () => {
+    const handlePress = async () => {
+        const res = await Linking.canOpenURL(linkProfile)
+        if (res) {
+            await Linking.openURL(linkProfile)
+        }
+    }
     return (
         <SafeAreaView style={style.container}>
             <StatusBar backgroundColor={colorGithub} barStyle="light-content" />
@@ -31,6 +40,11 @@ const App = () => {
                 <Text style={[style.defaultText, style.nickName]}>
                     FronEnd Developoer
                 </Text>
+                <Pressable onPress={handlePress}>
+                    <View style={style.button}>
+                        <Text style={[style.defaultText]}>open in GitHub</Text>
+                    </View>
+                </Pressable>
             </View>
         </SafeAreaView>
     )
@@ -51,9 +65,9 @@ const style = StyleSheet.create({
     avatar: {
         height: 200,
         width: 200,
-        borderRadius: 100,
         borderColor: 'white',
         borderWidth: 2,
+        borderRadius: 100,
     },
     defaultText: {
         color: 'white',
@@ -65,6 +79,12 @@ const style = StyleSheet.create({
     nickName: {
         color: colorDark,
         fontSize: 20,
-        fontWeight: 'thin',
+        fontWeight: 'normal',
+    },
+    button: {
+        backgroundColor: colorDark,
+        padding: 10,
+        borderRadius: 10,
+        margin: 10,
     },
 })
